@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <Button
+        android:text="mp4-yuv"
+        android:onClick="convertYuv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <Button
+        android:text="only-play-video"
+        android:onClick="onlyPlayVideo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+</LinearLayout>
