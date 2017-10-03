@@ -10,17 +10,29 @@ import android.view.View;
  */
 
 public class VideoPlayActivity extends AppCompatActivity {
+
+    private MyViedeoView mVideoView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_play);
+        mVideoView = (MyViedeoView) findViewById(R.id.videoView);
     }
 
     public void convertYuv(View view){
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+             VideoPlayer videoPlayer=new VideoPlayer();
+                videoPlayer.convertYuv(Constant.VIEDO_INPUT_PATH, Constant.VIEDO_OUT_PATH);
+            }
+        }).start();
     }
 
     public void onlyPlayVideo(View view){
-
+        mVideoView.play(Constant.VIEDO_INPUT_PATH);
     }
+
+
 }

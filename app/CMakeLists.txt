@@ -10,6 +10,7 @@ add_library(
              SHARED
 
              src/main/cpp/video-play.cpp
+             src/main/cpp/audio-play.cpp
              src/main/cpp/native-lib.cpp )
 
 
@@ -23,68 +24,68 @@ find_library( android-lib
 
 set(DIR ../../../../libs)
 
-add_library(avcodec-57
+add_library(avcodec-56
             SHARED
             IMPORTED)
-set_target_properties(avcodec-57
+set_target_properties(avcodec-56
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libavcodec-57.so)
+                      ${DIR}/armeabi/libavcodec-56.so)
 
 
 
-add_library(avdevice-57
+add_library(avdevice-56
             SHARED
             IMPORTED)
-set_target_properties(avdevice-57
+set_target_properties(avdevice-56
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libavdevice-57.so)
+                      ${DIR}/armeabi/libavdevice-56.so)
 
-add_library(avfilter-6
+add_library(avfilter-5
             SHARED
             IMPORTED)
-set_target_properties(avfilter-6
+set_target_properties(avfilter-5
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libavfilter-6.so)
+                      ${DIR}/armeabi/libavfilter-5.so)
 
-add_library(avformat-57
+add_library(avformat-56
             SHARED
             IMPORTED)
-set_target_properties(avformat-57
+set_target_properties(avformat-56
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libavformat-57.so)
+                      ${DIR}/armeabi/libavformat-56.so)
 
-add_library(avutil-55
+add_library(avutil-54
             SHARED
             IMPORTED)
-set_target_properties(avutil-55
+set_target_properties(avutil-54
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libavutil-55.so)
+                      ${DIR}/armeabi/libavutil-54.so)
 
 
-add_library(swresample-2
+add_library(swresample-1
             SHARED
             IMPORTED)
-set_target_properties(swresample-2
+set_target_properties(swresample-1
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libswresample-2.so)
+                      ${DIR}/armeabi/libswresample-1.so)
 
-add_library(swscale-4
+add_library(swscale-3
             SHARED
             IMPORTED)
-set_target_properties(swscale-4
+set_target_properties(swscale-3
                       PROPERTIES IMPORTED_LOCATION
-                      ${DIR}/armeabi/libswscale-4.so)
+                      ${DIR}/armeabi/libswscale-3.so)
 
 
 
 target_link_libraries(
                        native-lib
-                       avcodec-57
-                       avdevice-57
-                       avfilter-6
-                       avformat-57
-                       avutil-55
-                       swresample-2
-                       swscale-4
+                       avcodec-56
+                       avdevice-56
+                       avfilter-5
+                       avformat-56
+                       avutil-54
+                       swresample-1
+                       swscale-3
                        ${log-lib}
                        ${android-lib})

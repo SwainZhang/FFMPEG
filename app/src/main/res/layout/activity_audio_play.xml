@@ -3,5 +3,21 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <Button
+        android:onClick="convertPCM"
+        android:text="mp3-pcm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="directPlay"
+        android:text="directPlay"/>
+
+    <Button
+        android:onClick="playPCM"
+        android:text="play-pcm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 </LinearLayout>

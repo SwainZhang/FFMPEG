@@ -12,7 +12,7 @@ public class Constant {
     public static final String VIEDO_INPUT_PATH= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"MyMultiThreadDownload"+File.separator+"input.mp4";
     public static final String VIEDO_OUT_PATH= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"MyMultiThreadDownload"+File.separator+"output.yuv";
 
-    public static final String AUDIO_INPUT_PATH=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"MyMultiThreadDownload"+File.separator+"test.mp3";
-    public static final String AUDIO_OUT_PATH=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"MyMultiThreadDownload"+File.separator+"test.pcm";
+    public static final String AUDIO_INPUT_PATH=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"MyMultiThreadDownload"+File.separator+"music.mp3";
+    public static final String AUDIO_OUT_PATH=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"MyMultiThreadDownload"+File.separator+"music.pcm";
 
 }

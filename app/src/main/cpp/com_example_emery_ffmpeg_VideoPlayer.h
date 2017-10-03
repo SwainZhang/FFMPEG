@@ -15,6 +15,14 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_VideoPlayer_convertYuv
   (JNIEnv *, jobject, jstring, jstring);
 
+/*
+ * Class:     com_example_emery_ffmpeg_VideoPlayer
+ * Method:    directPlay
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_VideoPlayer_directPlay
+  (JNIEnv *, jobject, jstring);
+
 #ifdef __cplusplus
 }
 #endif

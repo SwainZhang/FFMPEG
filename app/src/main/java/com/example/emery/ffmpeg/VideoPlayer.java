@@ -6,4 +6,5 @@ package com.example.emery.ffmpeg;
 
 public class VideoPlayer {
     public native  void convertYuv(String inputPath,String outputPath);
+
 }
