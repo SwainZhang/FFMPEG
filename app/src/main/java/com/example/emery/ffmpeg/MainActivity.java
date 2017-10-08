@@ -34,4 +34,8 @@ public class MainActivity extends AppCompatActivity {
      public void onlyAudio(View view){
          startActivity((new Intent(this,AudioPlayActivity.class)));
      }
+
+     public void audioVideo(View view){
+         startActivity(new Intent(this,AudioVideoActivity.class));
+     }
 }

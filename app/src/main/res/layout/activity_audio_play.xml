@@ -20,4 +20,15 @@
         android:text="play-pcm"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
+
+    <Button
+        android:text="openSLES"
+        android:onClick="playOpenSLES"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <Button
+        android:onClick="stopOpenSLESplay"
+        android:text="stopOpenSLESplay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 </LinearLayout>

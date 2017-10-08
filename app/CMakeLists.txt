@@ -11,7 +11,9 @@ add_library(
 
              src/main/cpp/video-play.cpp
              src/main/cpp/audio-play.cpp
-             src/main/cpp/native-lib.cpp )
+             src/main/cpp/native-lib.cpp
+             src/main/cpp/open-sl-es-audio-play.cpp
+             src/main/cpp/emery-player.cpp)
 
 
 include_directories(libs/include)
@@ -21,6 +23,9 @@ find_library( log-lib
 
 find_library( android-lib
               android)
+
+find_library( openSLES-lib
+              OpenSLES)
 
 set(DIR ../../../../libs)
 
@@ -88,4 +93,5 @@ target_link_libraries(
                        swresample-1
                        swscale-3
                        ${log-lib}
-                       ${android-lib})
+                       ${android-lib}
+                       ${openSLES-lib})

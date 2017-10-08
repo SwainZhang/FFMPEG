@@ -54,4 +54,19 @@ public class AudioPlayActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void playOpenSLES(View view){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AudioPlayer audioPlayer=new AudioPlayer();
+                audioPlayer.openElESPlay(Constant.AUDIO_INPUT_PATH);
+            }
+        }).start();
+    }
+
+    public void stopOpenSLESplay(View view){
+        AudioPlayer audioPlayer=new AudioPlayer();
+        audioPlayer.stopELESPlay();
+    }
+
 }

@@ -23,6 +23,22 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_AudioPlayer_convertPCM
 JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_AudioPlayer_directPlay
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     com_example_emery_ffmpeg_AudioPlayer
+ * Method:    openElESPlay
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_AudioPlayer_openElESPlay
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_example_emery_ffmpeg_AudioPlayer
+ * Method:    stopELESPlay
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_AudioPlayer_stopELESPlay
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

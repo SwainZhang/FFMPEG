@@ -87,6 +87,7 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_AudioPlayer_convertPCM
     fclose(file_pcm);
     av_frame_free(&avFrame);
     avcodec_close(avCodecContext);
+    swr_free(&swrContext);
     avformat_free_context(avFormatContext);
 
     env->ReleaseStringUTFChars(intput_,inputStr);
@@ -172,6 +173,7 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_AudioPlayer_directPlay
     LOGI("----------8----------");
     av_frame_free(&avFrame);
     avcodec_close(avCodecContext);
+    swr_free(&swrContext);
     avformat_free_context(avFormatContext);
 
     env->ReleaseStringUTFChars(intput_,inputStr);

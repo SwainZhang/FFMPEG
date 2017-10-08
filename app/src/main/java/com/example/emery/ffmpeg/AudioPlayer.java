@@ -19,8 +19,8 @@ public class AudioPlayer {
 
     public native void convertPCM(String inputPath, String outputPath);
     public native void directPlay(String inputPath);
-
-
+    public native void openElESPlay(String inputPath);
+    public native void stopELESPlay();
     public void playPCM(String inputString){
         int minBufferSize = AudioTrack.getMinBufferSize(44100, AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT);
         mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,44100,AudioFormat.CHANNEL_OUT_STEREO, AudioFormat.ENCODING_PCM_16BIT,minBufferSize,AudioTrack.MODE_STREAM);
