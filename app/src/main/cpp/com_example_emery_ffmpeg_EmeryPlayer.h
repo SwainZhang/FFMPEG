@@ -15,6 +15,38 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_audioVideoPlay
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     com_example_emery_ffmpeg_EmeryPlayer
+ * Method:    player
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_player
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_emery_ffmpeg_EmeryPlayer
+ * Method:    stop
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_stop
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_emery_ffmpeg_EmeryPlayer
+ * Method:    release
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_release
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_example_emery_ffmpeg_EmeryPlayer
+ * Method:    display
+ * Signature: (Landroid/view/Surface;)V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_display
+  (JNIEnv *, jobject, jobject);
+
 #ifdef __cplusplus
 }
 #endif

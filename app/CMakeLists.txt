@@ -13,7 +13,9 @@ add_library(
              src/main/cpp/audio-play.cpp
              src/main/cpp/native-lib.cpp
              src/main/cpp/open-sl-es-audio-play.cpp
-             src/main/cpp/emery-player.cpp)
+             src/main/cpp/emery-player.cpp
+             src/main/cpp/ffmepg-audio.cpp
+             src/main/cpp/ffmpeg-video.cpp)
 
 
 include_directories(libs/include)

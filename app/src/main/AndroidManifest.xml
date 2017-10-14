@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".AudioPlayActivity"></activity>
         <activity android:name=".VideoPlayActivity"></activity>
-
+        <activity android:name=".AudioVideoActivity"></activity>
     </application>
 
 </manifest>
