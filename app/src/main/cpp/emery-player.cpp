@@ -17,18 +17,20 @@ int isPlay = -1;
  * @return
  */
 void *process(void *args) {
+
     av_register_all();
+
+    //播放网络
+    avformat_network_init();
 
     AVFormatContext *avFormatContext = avformat_alloc_context();
 
     if (avformat_open_input(&avFormatContext, inputStr, NULL, NULL) < 0) {
         LOGE("打开失败");
-        return;
     }
 
     if (avformat_find_stream_info(avFormatContext, NULL) < 0) {
         LOGE("获取流信息失败");
-        return;
     }
 
     for (int i = 0; i < avFormatContext->nb_streams; ++i) {
@@ -38,6 +40,7 @@ void *process(void *args) {
 
         if (avcodec_open2(avCodecContext, avCodec, NULL) < 0) {
             LOGE("无法打开解码器");
+            continue;
         }
 
         if (avFormatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {

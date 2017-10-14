@@ -20,12 +20,14 @@ int FFmpegAudio::get(AVPacket *avPacket) {
             queue.pop();
             av_free_packet(pkt);
 
+            break;
+
         }else{
             //如果队列没有数据就阻塞
             pthread_cond_wait(&cond,&mutex);
         }
     }
-
+    pthread_mutex_unlock(&mutex);
     return 0;
 }
 

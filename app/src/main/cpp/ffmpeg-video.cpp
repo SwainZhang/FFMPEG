@@ -28,11 +28,13 @@ int FFmpegVideo::get(AVPacket *avPacket) {
             queue.pop();
             av_free_packet(pkt);
 
+            break;
+
         }else{
             pthread_cond_wait(&cond,&mutex);
         }
 
-
+        pthread_mutex_unlock(&mutex);
     }
     return 0;
 }
@@ -63,12 +65,17 @@ void * play_video(void* arg){
             SWS_BILINEAR,NULL,NULL,0);
 
     AVFrame* dst=av_frame_alloc();
-    uint8_t* av_dst_size= (uint8_t *) avpicture_get_size(AV_PIX_FMT_ARGB, video->avCodecContext->width, video->avCodecContext->height);
-    avpicture_fill((AVPicture *) avFrame, av_dst_size, AV_PIX_FMT_ARGB, video->avCodecContext->width, video->avCodecContext->height);
+    uint8_t* out_buffer= (uint8_t *) av_malloc(avpicture_get_size(AV_PIX_FMT_ARGB, video->avCodecContext->width, video->avCodecContext->height));
+    avpicture_fill((AVPicture *) avFrame, out_buffer, AV_PIX_FMT_ARGB, video->avCodecContext->width, video->avCodecContext->height);
 
+    int got_frame=-1;
     while (video->isPlay){
         video->get(avPacket);
-        sws_scale(swsContext, (const uint8_t *const *) avFrame->data, avFrame->linesize, 0, avFrame->height, dst->data, dst->linesize);
+        avcodec_decode_video2(video->avCodecContext,avFrame,&got_frame,avPacket);
+
+        if(got_frame){
+            sws_scale(swsContext, (const uint8_t *const *) avFrame->data, avFrame->linesize, 0, avFrame->height, dst->data, dst->linesize);
+        }
 
     }
 }
@@ -82,7 +89,7 @@ void FFmpegVideo::stop() {
 }
 
 void FFmpegVideo::setAVCodecContext(AVCodecContext *avCodecContext) {
-
+   this->avCodecContext=avCodecContext;
 }
 
 AVCodecContext *FFmpegVideo::getAVCodecContext() {

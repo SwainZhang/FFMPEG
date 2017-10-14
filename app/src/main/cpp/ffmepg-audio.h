@@ -6,9 +6,7 @@
 #define FFMPEG_FFMEPG_AUDIO_H
 
 #include "header.h"
-extern "C" {
-#include <queue>
-};
+
 
 class FFmpegAudio {
 

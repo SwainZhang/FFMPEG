@@ -6,6 +6,7 @@
 #define FFMPEG_HEADER_H
 
 #include "my-log.h"
+
 extern "C" {
 #include "libavcodec/avcodec.h"
 #include "libavformat/avformat.h"
@@ -15,5 +16,6 @@ extern "C" {
 #include <queue>
 #include "SLES/OpenSLES.h"
 #include "SLES/OpenSLES_Android.h"
+#include <android/native_window_jni.h>
 }
 #endif //FFMPEG_HEADER_H
