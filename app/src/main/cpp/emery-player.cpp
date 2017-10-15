@@ -50,7 +50,7 @@ void *process(void *args) {
         } else if (avFormatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO) {
             fFmpegAudio->setAVCodecContext(avCodecContext);
             fFmpegAudio->index = i;
-
+            fFmpegAudio->time_base=avCodecContext->time_base;
         }
     }
 
@@ -59,7 +59,7 @@ void *process(void *args) {
 
     isPlay = 1;
 
-    AVPacket *avPacket = (AVPacket *) av_malloc(sizeof(AVPacket));
+    AVPacket *avPacket = (AVPacket *) av_mallocz(sizeof(AVPacket));
 
     //解码线程，生产者，生产视频packet和音频packet
     while (isPlay && av_read_frame(avFormatContext, avPacket) == 0) {
@@ -92,6 +92,8 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_audioVideoPlay
 
     fFmpegVideo = new FFmpegVideo();
     fFmpegAudio = new FFmpegAudio();
+
+    fFmpegVideo->setFFmpegAudio(fFmpegAudio);
     pthread_create(&p_tid, NULL, process, NULL);
 
 

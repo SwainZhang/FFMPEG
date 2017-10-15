@@ -12,6 +12,7 @@ extern "C" {
 #include "libavformat/avformat.h"
 #include "libswresample/swresample.h"
 #include "libswscale/swscale.h"
+#include "libavutil/time.h"
 #include <pthread.h>
 #include <queue>
 #include "SLES/OpenSLES.h"

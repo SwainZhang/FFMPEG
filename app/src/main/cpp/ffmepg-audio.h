@@ -33,6 +33,34 @@ public :
     //条件变量
     pthread_cond_t cond;
 
+    //转换上下文
+    SwrContext* swrContext;
+
+    //输出缓冲区
+    uint8_t * out_buffer;
+
+    //通道数
+    int nb_channels;
+
+    //从第一帧开始已经播放的时间
+    double clock;
+
+    //pts 不同场景下有不同的方式
+    // AVCodecContext中的AVRational根据帧率来设定，如25帧，那么num = 1，den=25
+    // AVStream中的time_base一般根据其采样频率设定，如（1，90000）
+    AVRational time_base;
+
+    SLObjectItf  engineObject;
+    SLEngineItf  engineItf;
+    SLObjectItf  outputMixObject;
+    SLEnvironmentalReverbItf  outputMixEnvironment;
+    SLEnvironmentalReverbSettings outputEnvironmentSettings=SL_I3DL2_ENVIRONMENT_PRESET_DEFAULT;
+    SLObjectItf  playerObject;
+    SLPlayItf  playItf;
+    SLAndroidSimpleBufferQueueItf androidBufferQueueItf;
+    void * buffer;
+    SLVolumeItf volumeItf;
+
 public:
     FFmpegAudio();
     ~ FFmpegAudio();
@@ -42,6 +70,9 @@ public:
     void stop();
     void setAVCodecContext( AVCodecContext* avCodecContext);
     AVCodecContext* getAVCodecContext();
+    int  createPlayer();
 };
+
+
 
 #endif //FFMPEG_FFMEPG_AUDIO_H

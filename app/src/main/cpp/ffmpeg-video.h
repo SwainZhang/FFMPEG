@@ -6,6 +6,8 @@
 #define FFMPEG_FFMPEG_VIDEO_H
 
 #include "header.h"
+#include "ffmepg-audio.h"
+
 class FFmpegVideo{
 public :
 
@@ -29,6 +31,15 @@ public :
 
     //条件变量
     pthread_cond_t cond;
+
+    //pts
+    AVRational time_base;
+
+    //音频 视频追音频
+    FFmpegAudio* audio;
+
+    //视频的播放时间线
+    double clock;
 public:
     FFmpegVideo();
     ~FFmpegVideo();
@@ -37,6 +48,9 @@ public:
     void play();
     void stop();
     void setAVCodecContext( AVCodecContext* avCodecContext);
+    void setFFmpegAudio(FFmpegAudio* audio);
+    void setPlayCallback(void(*video_callback)(AVFrame* avFrame));
+    double synchronize(AVFrame* avFrame,double play);
     AVCodecContext* getAVCodecContext();
 
 };
