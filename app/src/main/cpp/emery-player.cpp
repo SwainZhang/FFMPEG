@@ -13,7 +13,7 @@ const char *inputStr = NULL;
 int isPlay = -1;
 
 
-ANativeWindow* nativeWindow;
+ANativeWindow* nativeWindow=NULL;
 
 void video_play_callback(AVFrame* frame){
 
@@ -31,7 +31,7 @@ void video_play_callback(AVFrame* frame){
 
     //RGBA帧的起始地址
     uint8_t *dst= (uint8_t *) window_buffer.bits;
-    int dstStride=window_buffer.stride;
+    int dstStride=window_buffer.stride*4;
 
     //视频帧的起始地址
     uint8_t *src=frame->data[0];
@@ -82,11 +82,16 @@ void *process(void *args) {
         if (avFormatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
             fFmpegVideo->setAVCodecContext(avCodecCtx);
             fFmpegVideo->index = i;
+            fFmpegAudio->time_base=avFormatContext->streams[i]->time_base;
+            if (nativeWindow)
+                ANativeWindow_setBuffersGeometry(nativeWindow, fFmpegVideo->avCodecContext->width,
+                                                 fFmpegVideo->avCodecContext->height,
+                                                 WINDOW_FORMAT_RGBA_8888);
 
         } else if (avFormatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO) {
             fFmpegAudio->setAVCodecContext(avCodecCtx);
             fFmpegAudio->index = i;
-            fFmpegAudio->time_base=avCodecCtx->time_base;
+            fFmpegAudio->time_base=avFormatContext->streams[i]->time_base;
         }
     }
 
@@ -99,18 +104,18 @@ void *process(void *args) {
 
     isPlay = 1;
 
-    AVPacket *avPacket = (AVPacket *) av_mallocz(sizeof(AVPacket));
+    AVPacket *avPacket = (AVPacket *) av_malloc(sizeof(AVPacket));
 
     //解码线程，生产者，生产视频packet和音频packet
     while (isPlay) {
 
-        SLresult ret=av_read_frame(avFormatContext, avPacket);
+        int ret=av_read_frame(avFormatContext, avPacket);
 
         if(ret==0){
             if (fFmpegVideo && fFmpegVideo->isPlay && avPacket->stream_index == fFmpegVideo->index) {
                 fFmpegVideo->put(avPacket);
-            } else if (fFmpegAudio && fFmpegAudio->isPlay && avPacket->stream_index == fFmpegVideo->index) {
-                fFmpegVideo->put(avPacket);
+            } else if (fFmpegAudio && fFmpegAudio->isPlay && avPacket->stream_index == fFmpegAudio->index) {
+                fFmpegAudio->put(avPacket);
             }
             av_packet_unref(avPacket);
 
@@ -142,6 +147,51 @@ void *process(void *args) {
     pthread_exit(0);
 }
 
+/*
+ * Class:     com_example_emery_ffmpeg_EmeryPlayer
+ * Method:    release
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_release
+        (JNIEnv *env, jobject instance) {
+
+    if (isPlay) {
+        isPlay = 0;
+        pthread_join(p_tid, 0);
+    }
+    if (fFmpegVideo) {
+        if (fFmpegVideo->isPlay) {
+            fFmpegVideo->stop();
+        }
+        delete (fFmpegVideo);
+        fFmpegVideo = 0;
+    }
+    if (fFmpegAudio) {
+        if (fFmpegAudio->isPlay) {
+            fFmpegAudio->stop();
+        }
+        delete (fFmpegAudio);
+        fFmpegAudio = 0;
+
+    }
+}
+/*
+ * Class:     com_example_emery_ffmpeg_EmeryPlayer
+ * Method:    display
+ * Signature: (Landroid/view/Surface;)V
+ */
+JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_display
+        (JNIEnv *env, jobject instance, jobject surface) {
+    if(nativeWindow!=NULL){
+        ANativeWindow_release(nativeWindow);
+        nativeWindow=NULL;
+    }
+    nativeWindow=ANativeWindow_fromSurface(env,surface);
+    if(fFmpegVideo!=NULL&&fFmpegVideo->avCodecContext!=NULL){
+        ANativeWindow_setBuffersGeometry(nativeWindow,fFmpegVideo->avCodecContext->width,fFmpegVideo->avCodecContext->height,WINDOW_FORMAT_RGBA_8888);
+    }
+}
+
 JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_audioVideoPlay
         (JNIEnv *env, jobject instance, jstring input_) {
     inputStr = env->GetStringUTFChars(input_, JNI_FALSE);
@@ -149,11 +199,12 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_audioVideoPlay
     fFmpegVideo = new FFmpegVideo();
     fFmpegAudio = new FFmpegAudio();
 
+    //绘制
     fFmpegVideo->setPlayCallback(video_play_callback);
     pthread_create(&p_tid, NULL, process, NULL);
 
 
-    env->ReleaseStringUTFChars(input_, inputStr);
+   // env->ReleaseStringUTFChars(input_, inputStr);
 }
 
 /*
@@ -177,30 +228,6 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_stop
 
 }
 
-/*
- * Class:     com_example_emery_ffmpeg_EmeryPlayer
- * Method:    release
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_release
-        (JNIEnv *env, jobject instance) {
 
-}
 
-/*
- * Class:     com_example_emery_ffmpeg_EmeryPlayer
- * Method:    display
- * Signature: (Landroid/view/Surface;)V
- */
-JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_EmeryPlayer_display
-        (JNIEnv *env, jobject instance, jobject surface) {
-      if(nativeWindow!=NULL){
-          ANativeWindow_release(nativeWindow);
-          nativeWindow=NULL;
-      }
-      nativeWindow=ANativeWindow_fromSurface(env,surface);
-      if(fFmpegVideo!=NULL&&fFmpegVideo->avCodecContext!=NULL){
-          ANativeWindow_setBuffersGeometry(nativeWindow,fFmpegVideo->avCodecContext->width,fFmpegVideo->avCodecContext->height,WINDOW_FORMAT_RGBA_8888);
-      }
-}
 

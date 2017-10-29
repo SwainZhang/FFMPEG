@@ -145,8 +145,7 @@ JNIEXPORT void JNICALL Java_com_example_emery_ffmpeg_MyViedeoView_render
 
             if (got_frame) {
 
-                ANativeWindow_setBuffersGeometry(aNativeWindow, avCodecContext->width,
-                                                 avCodecContext->height, WINDOW_FORMAT_RGBA_8888);
+                ANativeWindow_setBuffersGeometry(aNativeWindow, avCodecContext->width, avCodecContext->height, WINDOW_FORMAT_RGBA_8888);
                 ANativeWindow_lock(aNativeWindow, &outBuff, NULL);
 
                 sws_scale(swsContext, (const uint8_t *const *) avFrame->data, avFrame->linesize, 0,

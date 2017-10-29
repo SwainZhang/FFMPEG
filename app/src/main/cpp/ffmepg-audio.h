@@ -54,7 +54,6 @@ public :
     SLEngineItf  engineItf;
     SLObjectItf  outputMixObject;
     SLEnvironmentalReverbItf  outputMixEnvironment;
-    SLEnvironmentalReverbSettings outputEnvironmentSettings=SL_I3DL2_ENVIRONMENT_PRESET_DEFAULT;
     SLObjectItf  playerObject;
     SLPlayItf  playItf;
     SLAndroidSimpleBufferQueueItf androidBufferQueueItf;
